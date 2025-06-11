@@ -62,7 +62,6 @@ public class ORMSynchronizer {
                 while (existingColumns.next()) {
                     existing.add(existingColumns.getString("COLUMN_NAME"));
                 }
-
                 for (String column : columns.keySet()) {
                     if (!existing.contains(column)) {
                         String alter = "ALTER TABLE " + tableName + " ADD COLUMN " + columns.get(column);
