@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 public class DBConfig {
-    private static final String PROPERTIES_FILE = "my.properties";
+    private static final String PROPERTIES_FILE = "resources/my.properties";
     private static final String url;
     private static final String user;
     private static final String password;
