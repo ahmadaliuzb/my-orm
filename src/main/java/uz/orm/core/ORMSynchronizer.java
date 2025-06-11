@@ -1,6 +1,7 @@
 package uz.orm.core;
 
 
+import org.reflections.Reflections;
 import uz.orm.annotations.Column;
 import uz.orm.annotations.Entity;
 import uz.orm.config.DBConfig;
@@ -15,8 +16,16 @@ import java.util.Map;
 import java.util.Set;
 
 public class ORMSynchronizer {
+    public static void execute(String basePackage) {
+        Reflections reflections = new Reflections(basePackage);
+        Set<Class<?>> entityClasses = reflections.getTypesAnnotatedWith(Entity.class);
 
-    public static void execute(Class<?> entityClass) {
+        for (Class<?> clazz : entityClasses) {
+            ORMSynchronizer.scanTable(clazz);
+        }
+    }
+
+    private static void scanTable(Class<?> entityClass) {
         if (!entityClass.isAnnotationPresent(Entity.class)) return;
         Entity entityAnnotation = entityClass.getAnnotation(Entity.class);
         String tableName = getEffectiveName(entityAnnotation.name(), entityClass.getSimpleName());
